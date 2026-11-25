@@ -1,55 +1,107 @@
-Project Title
+<!-- styled:v2 -->
+<div align="center">
 
-AI-Powered Legal Chatbot for Law Firm Website
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:1d1726,50:167dfe,100:9533fa&height=180&section=header&text=AI%20Legal%20Chatbot%20with%20RAG&fontSize=38&fontColor=ffffff&fontAlignY=36&desc=n8n%20%E2%80%A2%20OpenAI%20%E2%80%A2%20Supabase&descAlignY=58&descSize=16&animation=fadeIn" width="100%" alt="AI Legal Chatbot with RAG" />
 
-Project Overview
+**An n8n chatbot for law firm websites that answers client questions from the firm's own legal knowledge base, using retrieval-augmented generation (RAG).**
 
-This project is an AI-powered legal chatbot designed to enhance client interaction on a law firm website. The system provides intelligent, context-aware responses to user queries by using the law firm’s own structured legal knowledge. It helps automate initial legal guidance while maintaining professionalism and ethical boundaries.
+<p>
+  <img src="https://img.shields.io/badge/n8n-EA4B71?style=for-the-badge&logo=n8n&logoColor=white" alt="n8n" />
+  <img src="https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white" alt="OpenAI" />
+  <img src="https://img.shields.io/badge/Supabase%20Vector-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase" />
+  <img src="https://img.shields.io/badge/Google%20Drive-4285F4?style=for-the-badge&logo=googledrive&logoColor=white" alt="Google Drive" />
+  <img src="https://img.shields.io/badge/RAG-167dfe?style=for-the-badge" alt="RAG" />
+</p>
 
-Problem Statement
+<p>
+  <a href="#overview">Overview</a> ·
+  <a href="#how-it-works">How it works</a> ·
+  <a href="#key-features">Key features</a> ·
+  <a href="#tech-stack">Tech stack</a>
+</p>
 
-Law firms often receive repetitive legal queries from clients, which consumes valuable time and resources. Traditional websites fail to provide real-time, accurate answers, resulting in delayed responses and poor user experience. Manual handling of such queries is inefficient and inconsistent.
+</div>
 
-Solution
+---
 
-This project solves the problem by implementing an automated AI chatbot that understands user questions and responds using a dedicated legal knowledge base. The chatbot delivers accurate, relevant, and firm-specific legal information, improving efficiency and client trust while remaining available 24/7.
+## Overview
 
-How the System Works
+Law firms answer the same questions again and again, and a static website can't reply in real time. This chatbot sits on the firm's website and answers from the firm's own documents, so replies stay accurate, consistent and on-brand, 24 hours a day.
 
-When a user sends a message through the website, the AI agent processes the query and searches a vector-based knowledge repository. The most relevant legal information is retrieved and used to generate a professional and context-aware response. The workflow ensures consistency, accuracy, and scalability.
+## The challenge
 
-Key Features
+Repetitive client questions take up staff time, replies are slow and inconsistent, and website visitors leave before anyone responds.
 
-AI-powered legal chatbot
+## How it works
 
-Knowledge-base-driven responses (RAG architecture)
+```mermaid
+flowchart LR
+    subgraph ING[" 📥 Knowledge base "]
+        GD[Google Drive<br/>legal documents] --> L[Document loader]
+        L --> E[OpenAI<br/>embeddings]
+        E --> V[(Supabase<br/>vector store)]
+    end
+    subgraph CHAT[" 💬 Chat "]
+        Q([Website visitor]) --> A[AI agent<br/>OpenAI chat model]
+        A <--> MEM[Conversation<br/>memory]
+        A <--> V
+        A --> R([Answer from<br/>firm knowledge])
+    end
 
-Supports criminal, civil, FIA, IP, tort, and defamation-related queries
+    classDef box fill:#1d1726,stroke:#167dfe,color:#e5e7eb
+    classDef ends fill:#2e1065,stroke:#9533fa,color:#ffffff
+    class GD,L,E,A,MEM box
+    class V,Q,R ends
+```
 
-24/7 availability for clients
+1. **Documents loaded.** Legal documents from Google Drive are split, embedded with OpenAI and stored in a Supabase vector store.
+2. **Question received.** A visitor asks a question in the website chat.
+3. **Knowledge retrieved.** The AI agent searches the vector store for the most relevant passages and keeps the conversation in memory.
+4. **Answer sent.** It replies in a professional tone using the firm's own information.
 
-Consistent and professional answers
+## Key features
 
-Scalable automation workflow
+- RAG answers grounded in the firm's knowledge base
+- Covers criminal, civil, FIA, intellectual property, tort and defamation questions
+- Conversation memory for follow-up questions
+- Available 24/7 on the firm's website
+- Knowledge base refreshed by re-running the Google Drive ingestion
 
-Improves client experience and reduces manual workload
+## Use cases
 
-Use Case
+- Law firm websites
+- Legal consultation platforms
+- AI client intake and support
 
-This system is ideal for:
+## Tech stack
 
-Law firm websites
+![n8n](https://img.shields.io/badge/n8n-1d1726?style=for-the-badge) ![OpenAI](https://img.shields.io/badge/OpenAI-1d1726?style=for-the-badge) ![Supabase](https://img.shields.io/badge/Supabase-1d1726?style=for-the-badge) ![Google Drive](https://img.shields.io/badge/Google%20Drive-1d1726?style=for-the-badge) ![LangChain nodes](https://img.shields.io/badge/LangChain%20nodes-1d1726?style=for-the-badge)
 
-Legal consultation platforms
+## Files
 
-AI-based client intake and support systems
+| File | Contents |
+|:--|:--|
+| `legal chatbot (2).json` | The n8n workflow: import it into n8n and add your own credentials |
+| `AI-Powered Legal Chatbot for Law Firm Website.docx` | Project write-up |
 
-Note: The chatbot provides informational legal guidance only and does not replace professional legal advice.
+## Demo
 
-Demo Video
+▶️ [Watch the demo video](https://drive.google.com/file/d/1fqKHOb_AOZ-gb79qFqd6NwznNGMe_k2R/view?usp=sharing)
 
-A complete demonstration video of this project is available at the Google Drive link below.
-You can click the link to view the full workflow and chatbot functionality:
+> The chatbot gives general legal information only and does not replace professional legal advice.
 
-Video Link:
-https://drive.google.com/file/d/1fqKHOb_AOZ-gb79qFqd6NwznNGMe_k2R/view?usp=sharing
+---
+
+<div align="center">
+
+**Built by [Ch Muhammad Samiullah](https://github.com/samiullah156-creator)** · AI Automation Engineer and Full-Stack Developer at [Lexvaxa](https://lexvaxa.com)
+
+<a href="https://github.com/samiullah156-creator"><img src="https://img.shields.io/badge/More%20projects-181717?style=for-the-badge&logo=github&logoColor=white" alt="More projects" /></a>
+<a href="https://lexvaxa.com/contact"><img src="https://img.shields.io/badge/Work%20with%20me-167dfe?style=for-the-badge&logo=googlecalendar&logoColor=white" alt="Work with me" /></a>
+<a href="https://www.linkedin.com/in/sami-lexvaxa/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
+
+<sub>⭐ Star this repo if you found it useful</sub>
+
+</div>
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:9533fa,50:167dfe,100:1d1726&height=110&section=footer" width="100%" alt="" />
